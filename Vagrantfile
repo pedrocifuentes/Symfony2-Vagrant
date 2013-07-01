@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "precise32"
-  config.vm.provision :bash, :path => "bootstrap.sh"
+  #config.vm.provision :shell, :path => "bootstrap.sh"
   
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -68,10 +68,20 @@ Vagrant.configure("2") do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
-  # config.vm.provision :puppet do |puppet|
-  #   puppet.manifests_path = "manifests"
-  #   puppet.manifest_file  = "init.pp"
-  # end
+  config.vm.provision :puppet do |puppet|
+     puppet.options = "--verbose --debug"
+     puppet.manifests_path = "manifests"
+     puppet.manifest_file  = "phpbase.pp"
+     puppet.module_path = "modules"
+  
+  #  puppet.options = "--verbose --debug"
+  #  puppet.manifests_path = "manifests"
+  #  puppet.manifest_file  = "init.pp"
+  #  puppet.module_path = "modules"
+ 
+  end
+
+  config.vm.provision :shell, :path => "scripts/enable_remote_mysql_access.sh"
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
