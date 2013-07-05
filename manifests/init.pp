@@ -16,6 +16,7 @@ service { "apache2":
   ensure  => "running",
   require => Package["apache2"],
 }
+
 file { "/var/www/jhk2.local":
   ensure  => "link",
   target  => "/vagrant/jhk2.local",

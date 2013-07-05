@@ -1,19 +1,37 @@
-<VirtualHost *:80>
-	DocumentRoot /var/www/jhk2.local
-	
-	<Directory />
-		Options FollowSymLinks
-		AllowOverride None
-	</Directory>
-	
-	<Directory /var/www/>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride All
-		Order allow,deny
-		allow from all
-	</Directory>
+#<VirtualHost *:80>
+#	DocumentRoot /var/www/
+#	
+#	<Directory />
+#		Options FollowSymLinks
+#		AllowOverride None
+#	</Directory>
+#	
+#	<Directory /var/www/>
+#		Options Indexes FollowSymLinks MultiViews
+#		AllowOverride All
+#		Order allow,deny
+#		allow from all
+#	</Directory>
+#
+##	ErrorLog /var/log/apache2/error.log
+#	LogLevel warn
+#	CustomLog /var/log/apache2/access.log combined
+#</VirtualHost>
 
-	ErrorLog /var/log/apache2/error.log
-	LogLevel warn
-	CustomLog /var/log/apache2/access.log combined
+<VirtualHost *:80>
+    ServerName jhk2.local
+    ServerAdmin pcifuentes@jhktrader.com
+
+    DocumentRoot /var/www/jhk2.local/web
+    <Directory /var/www/jhk2.local/web/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+        <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ /app.php [QSA,L]
+        </IfModule>
+    </Directory>
 </VirtualHost>

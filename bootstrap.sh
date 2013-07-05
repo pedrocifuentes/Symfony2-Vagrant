@@ -10,8 +10,7 @@ sudo add-apt-repository -y ppa:ondrej/php5
 
 # MariaDB
 sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb
-http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
+sudo add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/5.5/ubuntu precise main'
 
 sudo apt-get update
 sudo apt-get install -y apache2 vim php5 phpmyadmin mariadb-server git

@@ -15,9 +15,19 @@ class symfony2_app
 		require => Exec['install composer'],
 	}
 
+	exec { 'create project folder':
+		command => "/bin/sh -c mkdir /var/www/jhk2.local",
+		require => Exec['install composer'],
+	}
+	
+	exec { 'clone project':
+		command => "/bin/sh -c 'cd /var/www/jhk2.local && git clone https://github.com/yoelkj/demo-symfony2.git'",
+		require => [Exec['install composer'], Exec['create project folder']],
+	}
+
 	exec { 'get symfony packages':
-		command => "/bin/sh -c 'cd /var/www/ && composer install'",
-		require => [Exec['global composer'], Package['git-core']],
+		command => "/bin/sh -c 'cd /var/www/ && composer update'",
+		require => [Exec['global composer'], Package['git-core'], Exec['clone project']],
 		creates => "/var/www/composer.lock",
 		timeout => 900,
 	}
@@ -34,7 +44,7 @@ class symfony2_app
 	}
 
 
-	file { '/var/www/app/storage':
+	file { '/var/www/':
 		mode => 0777
 	}
 }
